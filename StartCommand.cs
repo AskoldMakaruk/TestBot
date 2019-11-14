@@ -5,13 +5,16 @@ using Telegram.Bot.Types;
 
 namespace TestBot
 {
-    public class StartCommand : StaticCommand
+    public class StartCommand : IStaticCommand
     {
-        public override Response Execute(Message message, Client client)
+        public Response Execute(Message message, Client client)
         {
-            return new Response(this).SendTextMessage(message.From.Id, "I'm alive!");
+            return new Response().SendTextMessage(message.From.Id, "I'm alive!");
         }
 
-        public override string Alias => "/start";
+        public bool Suitable(Message message)
+        {
+            return message.Text == "/start";
+        }
     }
 }
